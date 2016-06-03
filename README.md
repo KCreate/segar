@@ -2,6 +2,10 @@
 
 Convert 1 dimensional arrays to segments.
 
+[GitHub Page](https://github.com/KCreate/segar)
+
+[NPM Page](https://www.npmjs.com/package/segar)
+
 ## Show me code
 
 ###### Convert an array to segments
