@@ -1,0 +1,13 @@
+{
+  "name": "segar",
+  "version": "0.1.0",
+  "description": "Convert an array to segments",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {},
+  "scripts": {
+    "test": "node test"
+  },
+  "author": "Leonard Schütz",
+  "license": "MIT"
+}
