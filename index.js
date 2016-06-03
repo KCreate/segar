@@ -40,15 +40,10 @@ function arrayToSegments(array, segmentSize, callback) {
         last = last.slice(0);
 
         // Append to the segment
-        last[index].push(callback(current));
+        last[index].push(callback(current, index));
 
         return last;
     }, []);
-
-    // Fill the last segment with 0 if it's not full
-    while (segments[segments.length - 1].length !== segmentSize) {
-        segments[segments.length - 1].push(0);
-    }
 
     return segments;
 }
@@ -62,7 +57,25 @@ function arrayToSegments(array, segmentSize, callback) {
  * @return {array}
  */
 function segmentsToArray(segments, callback) {
-    
+
+    // Apply defaults
+    callback = callback || ((x) => x);
+
+    // Error checking
+    if (segments.constructor !== Array) {
+        throw TypeError('Expected Array, received: ' + typeof segments);
+    }
+    if (callback.constructor !== Function) {
+        throw TypeError('Expected Function, received: ' + typeof callback);
+    }
+
+    // Flatten the array
+    segments = [].concat.apply([], segments);
+
+    // Apply the callback
+    segments = segments.map(callback);
+
+    return segments;
 }
 
 module.exports = {
