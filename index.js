@@ -4,7 +4,7 @@
  *
  * @param  {array, string} array
  * @param  {number} segmentSize, default is 4
- * @param  {function} callback - A function to apply to every item
+ * @param  {function} callback - Receives the item, the index in the original array and the current segment index
  * @return {array}
  */
 function arrayToSegments(array, segmentSize, callback) {
@@ -30,20 +30,16 @@ function arrayToSegments(array, segmentSize, callback) {
     }
 
     // Convert to segments of the specified size
-    const segments = array.reduce((last, current, index) => {
-        index = Math.floor(index / segmentSize);
+    let segments = [];
+    for (let i = 0; i < array.length; i += segmentSize) {
 
-        // Create the segment if it doesn't exist
-        if (!last[index]) last[index] = [];
+        // Apply the callbacks to every item in this segment
+        for (let j = 0; j < segmentSize; j++) {
+            array[i + j] = callback(array[i + j], i + j, i / segmentSize);
+        }
 
-        // Copy by value
-        last = last.slice(0);
-
-        // Append to the segment
-        last[index].push(callback(current, index));
-
-        return last;
-    }, []);
+        segments = segments.concat([array.slice(i, i + segmentSize)]);
+    }
 
     return segments;
 }
@@ -68,6 +64,8 @@ function segmentsToArray(segments, callback) {
     if (callback.constructor !== Function) {
         throw TypeError('Expected Function, received: ' + typeof callback);
     }
+
+    console.log(segments);
 
     // Flatten the array
     segments = [].concat.apply([], segments);

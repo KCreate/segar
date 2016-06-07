@@ -6,11 +6,9 @@ const segments = arrayToSegments(message, 4, (char) => (
     char.charCodeAt(0)
 ));
 
-console.log(segments);
-
-const decodedSegments = segmentsToArray(segments, (char) => (
-    String.fromCharCode(char)
-)).join('');
+const decodedSegments = segmentsToArray(segments, (char) => {
+    return String.fromCharCode(char);
+}).join('');
 
 // Test runner on a budget
 if (decodedSegments == message) {
