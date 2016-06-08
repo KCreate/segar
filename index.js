@@ -9,36 +9,67 @@
  */
 function arrayToSegments(array, segmentSize, callback) {
 
-    // Allow the array to be a string
-    if (array.constructor === String) {
-        array = array.split('');
+    // array is required
+    if (typeof array === 'undefined' || array === null) {
+        throw Error('You forgot to pass an array.');
     }
 
-    // Apply defaults
-    segmentSize = segmentSize || 4;
-    callback = callback || ((x) => x);
-
-    // Error checking
-    if (array.constructor !== Array) {
-        throw TypeError('Expected Array, received: ' + typeof array);
-    }
-    if (segmentSize.constructor !== Number) {
-        throw TypeError('Expected Number, received: ' + typeof segmentSize);
-    }
-    if (callback.constructor !== Function) {
-        throw TypeError('Expected Function, received: ' + typeof callback);
+    // segmenzSize is required
+    if (typeof segmentSize === 'undefined' || array === null) {
+        throw Error('You forgot to pass a segmentSize.');
     }
 
-    // Convert to segments of the specified size
+    // Array can be a string or an array
+    if (typeof array !== 'string' && array.constructor !== Array) {
+        throw TypeError('Expected an array or string, received: ' + typeof segmentSize);
+    }
+
+    // segmentSize can only be a number
+    if (typeof segmentSize !== 'number') {
+        throw TypeError('Expected a number, received: ' + typeof segmentSize);
+    }
+
+    // If a callback was passed, it can only be a function
+    if (typeof callback !== 'undefined') {
+        if (typeof callback !== 'function') {
+            throw TypeError('Expected a function, received: ' + typeof callback);
+        }
+    }
+
+    // Use Array.from to convert to an array
+    array = Array.from(array);
+
+    // If the array is empty, return an empty array back
+    if (array.length === 0) {
+        return [];
+    }
+
+    // segmentSize can't be zero
+    if (segmentSize < 1) {
+        throw Error('Can\'t create a segment with size: ' + segmentSize);
+    }
+
+    // Copy the array by value, not by reference
+    array = array.slice(0);
+
     let segments = [];
     for (let i = 0; i < array.length; i += segmentSize) {
 
-        // Apply the callbacks to every item in this segment
-        for (let j = 0; j < segmentSize; j++) {
-            array[i + j] = callback(array[i + j], i + j, i / segmentSize);
+        // If a callback was passed, iterate over it
+        if (callback) {
+            for (let j = 0; j < segmentSize; j++) {
+                if (i + j < array.length) {
+                    const callbackResult = callback(array[i + j], i + j, i / segmentSize);
+                    if (typeof callbackResult !== 'undefined') {
+                        array[i + j] = callbackResult;
+                    }
+                }
+            }
         }
 
-        segments = segments.concat([array.slice(i, i + segmentSize)]);
+        segments = segments.concat([
+            array.slice(i, i + segmentSize)
+        ]);
     }
 
     return segments;
@@ -64,8 +95,6 @@ function segmentsToArray(segments, callback) {
     if (callback.constructor !== Function) {
         throw TypeError('Expected Function, received: ' + typeof callback);
     }
-
-    console.log(segments);
 
     // Flatten the array
     segments = [].concat.apply([], segments);

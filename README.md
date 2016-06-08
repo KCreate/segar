@@ -33,6 +33,12 @@ const segments = arrayToSegments(message, 4, (char) => (
 */
 ```
 
+## Tests
+Every method is thorougly tested using facebook's testing framework Jest.
+```sh
+npm test
+```
+
 ## License
 The MIT License (MIT)
 Copyright (c) 2016 Leonard Schütz
