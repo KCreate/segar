@@ -75,37 +75,4 @@ function arrayToSegments(array, segmentSize, callback) {
     return segments;
 }
 
-
-/**
- * Converts segments to an array
- *
- * @param  {array} segments - The segments to decode
- * @param  {function} callback - A callback to apply to every item in the decoded array
- * @return {array}
- */
-function segmentsToArray(segments, callback) {
-
-    // Apply defaults
-    callback = callback || ((x) => x);
-
-    // Error checking
-    if (segments.constructor !== Array) {
-        throw TypeError('Expected Array, received: ' + typeof segments);
-    }
-    if (callback.constructor !== Function) {
-        throw TypeError('Expected Function, received: ' + typeof callback);
-    }
-
-    // Flatten the array
-    segments = [].concat.apply([], segments);
-
-    // Apply the callback
-    segments = segments.map(callback);
-
-    return segments;
-}
-
-module.exports = {
-    segmentsToArray,
-    arrayToSegments,
-};
+module.exports = arrayToSegments;

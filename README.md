@@ -6,24 +6,27 @@ Convert 1 dimensional arrays to segments.
 
 [NPM Page](https://www.npmjs.com/package/segar)
 
-## Show me code
+# Installation
+```sh
+npm install --save segar
+```
+```javascript
+const segar = require('segar');
+```
 
-###### Convert an array to segments
+## Convert an array to segments
 ```javascript
 const test = [1,2,3,4,5,6,7,8,9];
 // [1,2,3,4,5,6,7,8,9]
 
-test = arrayToSegments(test, 3);
+test = segar(test, 3);
 // [[1, 2, 3], [4, 5, 6], [7, 8, 9]];
-
-test = segmentsToArray(test);
-// [1,2,3,4,5,6,7,8,9]
 ```
 
-###### Convert a string to segments with 4 fields
+## Convert a string to segments with 4 fields
 ```javascript
 const message = "Hello World!";
-const segments = arrayToSegments(message, 4, (char) => (
+const segments = segar(message, 4, (char) => (
     char.charCodeAt(0)
 ));
 /*
