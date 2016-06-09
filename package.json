@@ -1,6 +1,6 @@
 {
   "name": "segar",
-  "version": "0.2",
+  "version": "0.2.0",
   "description": "Convert an array to segments",
   "main": "index.js",
   "dependencies": {},

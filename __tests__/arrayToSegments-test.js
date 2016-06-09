@@ -72,6 +72,16 @@ describe('Basic Behaviour', () => {
         expect(segar(testArray, 4)).toEqual([]);
     });
 
+    it('segmentizes a string', () => {
+        const testString = 'Hello World';
+
+        expect(segar(testString, 4)).toEqual([
+            ['H', 'e', 'l', 'l'],
+            ['o', ' ', 'W', 'o'],
+            ['r', 'l', 'd']
+        ]);
+    });
+
     it('throws an error when no segmentSize was passed', () => {
         expect(segar.bind(null, [1, 2, 3, 4])).toThrow(
             new Error('You forgot to pass a segmentSize.')
