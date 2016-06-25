@@ -12,7 +12,7 @@
     "url": "https://github.com/KCreate/segar.git"
   },
   "scripts": {
-    "test": "jest --watch"
+    "test": "jest"
   },
   "author": "Leonard Schütz",
   "license": "MIT"
